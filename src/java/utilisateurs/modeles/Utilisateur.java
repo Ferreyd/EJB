@@ -30,7 +30,7 @@ public class Utilisateur implements Serializable {
     public Utilisateur() {
     }
 
-    public Utilisateur(final String login, final String lastname, final String firstname) {  
+    public Utilisateur(final String firstname, final String lastname, final String login) {  
         this.login = login;  
         this.lastname = lastname;  
         this.firstname = firstname;  

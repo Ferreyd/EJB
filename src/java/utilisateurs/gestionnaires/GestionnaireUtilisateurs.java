@@ -23,8 +23,8 @@ public class GestionnaireUtilisateurs {
         creeUtilisateur("Georges", "Harisson", "georgesH");  
     }  
   
-    public Utilisateur creeUtilisateur(String nom, String prenom, String login) {  
-        Utilisateur u = new Utilisateur(nom, prenom, login);  
+    public Utilisateur creeUtilisateur(String prenom, String nom, String login) {  
+        Utilisateur u = new Utilisateur(prenom, nom, login);  
         em.persist(u);  
         return u;  
     }  

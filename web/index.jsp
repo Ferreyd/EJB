@@ -91,8 +91,8 @@
                 <c:forEach var="u" items="${requestScope['listeDesUsers']}">  
                     <tr>  
                         <td>${u.login}</td>  
-                        <td>${u.firstname}</td>  
                         <td>${u.lastname}</td>  
+                        <td>${u.firstname}</td>  
                         <!-- On compte le nombre de users -->  
                         <c:set var="total" value="${total+1}"/>  
                     </tr>  

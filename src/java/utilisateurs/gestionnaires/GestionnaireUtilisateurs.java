@@ -1,6 +1,8 @@
 package utilisateurs.gestionnaires;  
   
+import java.util.ArrayList;
 import java.util.Collection;  
+import java.util.List;
 import javax.ejb.Stateless;  
 import javax.persistence.EntityManager;  
 import javax.persistence.PersistenceContext;  
@@ -26,12 +28,48 @@ public class GestionnaireUtilisateurs {
         em.persist(u);  
         return u;  
     }  
+    
+     /**
+     * Cherche les utilisateurs pas leur login
+     * @param login login de l'utilisateur
+     * @return la liste des utilisateurs ayant le même login
+     */
+    public List<Utilisateur> chercherParLogin(String login)
+    {
+        Query q = em.createQuery("select u from Utilisateur u where u.login = '" + login + "'");
+        return q.getResultList();
+    }
+    
+
+    public Utilisateur modifierUtilisateur(String nom, String prenom, String login)
+    {
+        return null;
+    }
+    
+     /**
+      * Supprimer un utilisateur en le selectionnant par son login
+      * @param login Le login de l'utilisateur à supprimer
+      */
+    public void supprimerUtilisateur(String login)
+    {
+        
+        Utilisateur u = this.chercherParLogin(login).get(0); // on prend l'utilisateur qu'on recherche par le login
+        em.remove(u); // on le supprime  
+        
+    }
+    
   
     public Collection<Utilisateur> getAllUsers() {  
         // Exécution d'une requête équivalente à un select *  
         Query q = em.createQuery("select u from Utilisateur u");  
         return q.getResultList();  
     }  
+    
+   
     // Add business logic below. (Right-click in editor and choose  
-    // "Insert Code > Add Business Method")  
+    // "Insert Code > Add Business Method")
+
+    public void businessMethod() {
+    }
+    
 }  

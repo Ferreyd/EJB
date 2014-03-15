@@ -19,9 +19,7 @@
         <title>Gestionnaire d'utilisateurs</title>  
     </head>  
     <body> 
-        <div class="col-lg-12">
-        <h1>Gestionnaire d'utilisateurs</h1>  
-  
+        <div class="col-lg-12">  
   
         <!-- Message qui s'affiche lorsque la page est appelé avec un paramètre http message -->  
         <c:if test="${!empty param['message']}">  
@@ -31,45 +29,45 @@
   
         <h2>Menu de gestion des utilisateurs</h2>  
         <ul>  
-            <li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
+            <li><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
             <p>  
         </ul>  
             <h2>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
                 rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h2>  
         <ol>  
-            <li><a href="ServletUsers?action=creerUtilisateursDeTest">Créer 4 utilisateurs de test</a></li>  
+            <li><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></li>  
   
             <li>Créer un utilisateur</li>  
             <form action="ServletUsers" method="get">  
-                Nom : <input type="text" name="nom"/><br>  
-                Prénom : <input type="text" name="prenom"/><br>  
-                Login : <input type="text" name="login"/><br>  
+               <input type="text" placeholder="Nom" name="nom"/><br>  
+               <input type="text" placeholder="Prenom" name="prenom"/><br>  
+               <input type="text" placeholder="Login" name="login"/><br>  
                 <!-- Astuce pour passer des paramètres à une servlet depuis un formulaire JSP !-->  
                 <input type="hidden" name="action" value="creerUnUtilisateur"/>  
-                <input type="submit" value="Créer l'utilisateur" name="submit"/>  
+                <input type="submit" value="Créer l'utilisateur" class="btn btn-primary" name="submit"/>  
             </form>  
   
             <li>Afficher les détails d'un utilisateur</li>  
             <form action="ServletUsers" method="get">  
-                login : <input type="text" name="login"/><br>  
+                <input type="text" placeholder="Login" name="login"/><br>  
                 <input type="hidden" name="action" value="chercherParLogin"/>  
-                <input type="submit" value="Chercher" name="submit"/>  
+                <input type="submit" value="Chercher" class="btn btn-info" name="submit"/>  
             </form>  
   
   
             <li>Modifier les détails d'un utilisateur :</li>  
             <form action="ServletUsers" method="get">  
-                Login : <input type="text" name="login"/><br>  
-                Nom : <input type="text" name="nom"/><br>  
-                Prénom : <input type="text" name="prenom"/><br>  
+                <input type="text" placeholder="Login" name="login"/><br>  
+                <input type="text" placeholder="Nom" name="nom"/><br>  
+                <input type="text" placeholder="Prenom" name="prenom"/><br>  
                 <input type="hidden" name="action" value="updateUtilisateur"/>  
-                <input type="submit" value="Mettre à jour" name="submit"/>  
+                <input type="submit" value="Mettre à jour" class="btn btn-warning" name="submit"/>  
             </form>  
             <li>Supprimer un utilisateur :</li>  
             <form action="ServletUsers" method="get">  
-                Login : <input type="text" name="login"/><br>  
+                <input type="text" placeholder="Login" name="login"/><br>  
                 <input type="hidden" name="action" value="supprimerUtilisateur"/>  
-                <input type="submit" value="Supprimer" name="submit"/>  
+                <input type="submit" value="Supprimer" class="btn btn-danger" name="submit"/>  
             </form> 
         </ol>  
   

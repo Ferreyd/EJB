@@ -1,11 +1,21 @@
 /* The CSS for the table was based of an example at wc3 schools.  
 http://www.w3schools.com/css/tryit.asp?filename=trycss_table_fancy 
 */  
+
+.position
+{
+    text-align: center;
+}
+table.table-bordered
+{
+    height: 150px;
+    overflow: visible;
+}
 table.listing   
 {  
 font-family: Arial, Helvetica, sans-serif;  
 width:80%;  
-border-collapse:collapse;  
+border-collapse:collapse;
 }  
   
   

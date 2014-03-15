@@ -27,54 +27,68 @@
             </c:if>  
 
 
-            <h2>Menu de gestion des utilisateurs</h2>  
-            <ul>  
-                <h4><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>  
-                <p>  
-            </ul>  
-            <h2>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
-                rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h2> 
+            <h4>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
+                rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h4> 
 
-            <h3><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></h3>  
+            <h4><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></h4>  
             <div class="col-lg-12">
+                
                 <div class="col-lg-6">
-                    <h2>Formulaire</h2>
-                    <h3>Créer un utilisateur</h3> 
-                    <form action="ServletUsers" method="get"> 
-                        <label for="nom" class="col-sm-2 control-label">nom</label>
-                        <input type="text" class="form-control"placeholder="Nom" id="inputSuccess1" name="nom"/><br>  
-                        <input type="text" class="form-control"placeholder="Prenom" name="prenom"/><br>  
-                        <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
-                        <!-- Astuce pour passer des paramètres à une servlet depuis un formulaire JSP !-->  
-                        <input type="hidden" name="action" value="creerUnUtilisateur"/>  
-                        <input type="submit" value="Créer l'utilisateur" class="btn btn-primary" name="submit"/>  
-                    </form>  
+                    <h2 class="position">Formulaire</h2>
+                    <div class="col-lg-6">                       
+                        <h4>Créer un utilisateur</h4> 
+                        <form action="ServletUsers" method="get"> 
+                            <div class="form-group">
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control"placeholder="Nom" id="inputSuccess1" name="nom"/><br> 
+                                <label for="prenom">Prenom</label>
+                                <input type="text" class="form-control"placeholder="Prenom" name="prenom"/><br> 
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
+                                <!-- Astuce pour passer des paramètres à une servlet depuis un formulaire JSP !-->  
+                                <input type="hidden" name="action" value="creerUnUtilisateur"/>  
+                                <input type="submit" value="Créer l'utilisateur" class="btn btn-primary" name="submit"/>
+                            </div>
+                        </form>  
 
 
-                    <h3>Afficher les détails d'un utilisateur</h3>  
-                    <form action="ServletUsers" method="get">  
-                        <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
-                        <input type="hidden" name="action" value="chercherParLogin"/>  
-                        <input type="submit" value="Chercher" class="btn btn-info" name="submit"/>  
-                    </form> 
+                        <h4>Afficher les détails d'un utilisateur</h4>  
+                        <form action="ServletUsers" method="get"> 
+                            <div class="form-group">
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
+                                <input type="hidden" name="action" value="chercherParLogin"/>  
+                                <input type="submit" value="Chercher" class="btn btn-info" name="submit"/> 
+                            </div>
+                        </form> 
+                    </div>
+                    <div class="col-lg-6">
 
-                    <h3>Modifier les détails d'un utilisateur :</h3>  
-                    <form action="ServletUsers" method="get">  
-                        <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
-                        <input type="text" class="form-control"placeholder="Nom" name="nom"/><br>  
-                        <input type="text" class="form-control"placeholder="Prenom" name="prenom"/><br>  
-                        <input type="hidden" name="action" value="updateUtilisateur"/>  
-                        <input type="submit" value="Mettre à jour" class="btn btn-warning" name="submit"/>  
-                    </form> 
+                        <h4>Modifier les détails d'un utilisateur :</h4>  
+                        <form action="ServletUsers" method="get">
+                            <div class="form-group">
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control"placeholder="Login" name="login"/><br>
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control"placeholder="Nom" name="nom"/><br>  
+                                <label for="prenom">Prenom</label>
+                                <input type="text" class="form-control"placeholder="Prenom" name="prenom"/><br>  
+                                <input type="hidden" name="action" value="updateUtilisateur"/>  
+                                <input type="submit" value="Mettre à jour" class="btn btn-warning" name="submit"/>  
+                            </div>
+                        </form> 
 
-                    <h3>Supprimer un utilisateur :</h3>  
-                    <form action="ServletUsers" method="get">  
-                        <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
-                        <input type="hidden" name="action" value="supprimerUtilisateur"/>  
-                        <input type="submit" value="Supprimer" class="btn btn-danger" name="submit"/>  
-                    </form>
+                        <h4>Supprimer un utilisateur :</h4>  
+                        <form action="ServletUsers" method="get"> 
+                            <div class="form-group">
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control"placeholder="Login" name="login"/><br>  
+                                <input type="hidden" name="action" value="supprimerUtilisateur"/>  
+                                <input type="submit" value="Supprimer" class="btn btn-danger" name="submit"/> 
+                            </div>
+                        </form>
 
-
+                    </div>
 
                 </div>
                 <!-- Fin du menu -->  
@@ -82,7 +96,7 @@
                 <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
                 <div class="col-lg-6">
                     <c:if test="${param['action'] == 'listerLesUtilisateurs'}" >  
-                        <h2>Liste des utilisateurs</h2>  
+                        <h2 class="position">Liste des utilisateurs</h2>  
 
                         <table border="10" class="table table-bordered">  
                             <!-- La ligne de titre du tableau des comptes -->  
@@ -111,6 +125,10 @@
                         </table>  
 
                     </c:if> 
+                    <ul>  
+                        <h4><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>  
+                        <p>  
+                    </ul>  
                 </div>
             </div>    
     </body>  

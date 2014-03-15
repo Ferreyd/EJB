@@ -40,17 +40,19 @@ public class ServletUsers extends HttpServlet {
         // Pratique pour décider de l'action à faire  
         String action = request.getParameter("action");  
         String forwardTo = "";  
-        String message = "";  
+        String message = "";
+        int firstRow = 0;
   
         if (action != null) {  
             if (action.equals("listerLesUtilisateurs")) {  
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();  
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);  
+                
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";  
             } else if (action.equals("creerUtilisateursDeTest")) {  
                   gestionnaireUtilisateurs.creerUtilisateursDeTest();  
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();  
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);  
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";  
@@ -63,14 +65,14 @@ public class ServletUsers extends HttpServlet {
             } else if(action.equals("supprimerUtilisateur"))
             {
                 gestionnaireUtilisateurs.supprimerUtilisateur(request.getParameter("login"));
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();  
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);  
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";
             }            
            else if(action.equals("creerUnUtilisateur")){
                 gestionnaireUtilisateurs.creeUtilisateur(request.getParameter("prenom"), request.getParameter("nom"), request.getParameter("login"));
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
@@ -78,7 +80,7 @@ public class ServletUsers extends HttpServlet {
            else if(action.equals("updateUtilisateur"))
            {
                 gestionnaireUtilisateurs.modifierUtilisateur(request.getParameter("prenom"), request.getParameter("nom"), request.getParameter("login"));
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";

@@ -62,9 +62,11 @@ public class GestionnaireUtilisateurs {
     }
     
   
-    public Collection<Utilisateur> getAllUsers() {  
+    public Collection<Utilisateur> getAllUsers(int firstRow, int maxRow) {  
         // Exécution d'une requête équivalente à un select *  
-        Query q = em.createQuery("select u from Utilisateur u");  
+        Query q = em.createQuery("select u from Utilisateur u"); 
+        q.setFirstResult(firstRow);
+        q.setMaxResults(maxRow);
         return q.getResultList();  
     }  
     

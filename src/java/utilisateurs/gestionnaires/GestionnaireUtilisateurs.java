@@ -41,9 +41,12 @@ public class GestionnaireUtilisateurs {
     }
     
 
-    public Utilisateur modifierUtilisateur(String nom, String prenom, String login)
+    public void modifierUtilisateur(String prenom, String nom, String login)
     {
-        return null;
+        Query q = em.createQuery("update Utilisateur u " + 
+                "set u.firstname = '" + prenom + "' , " + "u.lastname = '" + nom + "' " +
+                "where u.login = '" + login + "'");
+        int numUpdates = q.executeUpdate();
     }
     
      /**

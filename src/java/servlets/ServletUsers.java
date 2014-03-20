@@ -25,6 +25,10 @@ import utilisateurs.modeles.Utilisateur;
  */
 @WebServlet(name = "ServletUsers", urlPatterns = {"/ServletUsers"})
 public class ServletUsers extends HttpServlet {
+    
+     int firstRow = 0;
+     int maxRow = 10; // nombre maximal d'utilisateur à afficher
+        
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
@@ -41,16 +45,36 @@ public class ServletUsers extends HttpServlet {
         String action = request.getParameter("action");  
         String forwardTo = "";  
         String message = "";
-        int firstRow = 0;
   
         if (action != null) {  
-            if (action.equals("listerLesUtilisateurs")) {  
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);  
-                
+            if (action.equals("listerLesUtilisateurs")) {
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, maxRow);                
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";  
-            } else if (action.equals("creerUtilisateursDeTest")) {  
+            }
+            else if(action.equals("listerLesUtilisateursUP"))
+            {             
+                firstRow += 10; //On prend les 10 prochains                
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, maxRow);                
+                request.setAttribute("listeDesUsers", liste);  
+                forwardTo = "index.jsp?action=listerLesUtilisateurs";  
+                message = "Liste des utilisateurs"; 
+            }
+            else if(action.equals("listerLesUtilisateursDOWN"))
+            {
+                if(firstRow > 9) // Pour eviter d'avoir une colonne de départ négative
+                {
+                    firstRow -= 10; //On prend les 10 derniers                  
+                    System.out.println(firstRow + " " + maxRow);                
+                }                
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, maxRow);                
+                request.setAttribute("listeDesUsers", liste);     
+                
+                forwardTo = "index.jsp?action=listerLesUtilisateurs";  
+                message = "Liste des utilisateurs"; 
+            }
+            else if (action.equals("creerUtilisateursDeTest")) {  
                   gestionnaireUtilisateurs.creerUtilisateursDeTest();  
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);  
                 request.setAttribute("listeDesUsers", liste);  

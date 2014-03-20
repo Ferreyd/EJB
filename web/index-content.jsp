@@ -30,7 +30,7 @@
             <h4>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
                 rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h4> 
 
-            <h4><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></h4>  
+            <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></h4>  
             <div class="col-lg-12">
                 
                 <div class="col-lg-6">
@@ -95,6 +95,8 @@
 
                 <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
                 <div class="col-lg-6">
+                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursDOWN">Precedent</a>
+                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursUP">Suivant</a>
                     <c:if test="${param['action'] == 'listerLesUtilisateurs'}" >  
                         <h2 class="position">Liste des utilisateurs</h2>  
 
@@ -125,8 +127,8 @@
                         </table>  
 
                     </c:if> 
-                    <ul>  
-                        <h4><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>  
+                    <ul>
+                        <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
                         <p>  
                     </ul>  
                 </div>

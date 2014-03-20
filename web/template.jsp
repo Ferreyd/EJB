@@ -10,7 +10,7 @@
 </head>  
 <body>  
     <jsp:include page="header.jsp"/>  
-  
+    <jsp:include page="menu.jsp"/>  
       
     <h1>${param.title}</h1>  
   

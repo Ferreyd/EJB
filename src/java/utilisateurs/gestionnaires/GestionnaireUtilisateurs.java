@@ -70,6 +70,12 @@ public class GestionnaireUtilisateurs {
         return q.getResultList();  
     }  
     
+    public Collection<Utilisateur> getAllUsers() {  
+        // Exécution d'une requête équivalente à un select *  
+        Query q = em.createQuery("select u from Utilisateur u"); 
+        return q.getResultList();  
+    }
+    
    
     // Add business logic below. (Right-click in editor and choose  
     // "Insert Code > Add Business Method")

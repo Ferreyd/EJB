@@ -13,19 +13,16 @@
 
 <html>  
     <head>  
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="resources/style.css">
         <title>Gestionnaire d'utilisateurs</title>  
     </head>  
-    <body> 
-        <div class="col-lg-12">  
+    <body>            
+        </div>
+        <div class="col-lg-11">  
 
             <!-- Message qui s'affiche lorsque la page est appelé avec un paramètre http message -->  
             <c:if test="${!empty param['message']}">  
                 <h4>Reçu message : ${param.message}</h4>  
             </c:if>  
-
 
             <h4>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
                 rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h4> 
@@ -95,8 +92,14 @@
 
                 <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
                 <div class="col-lg-6">
-                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursDOWN">Precedent</a>
-                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursUP">Suivant</a>
+                    <c:if test="${start == null}">
+                        <c:set var="start" value="0"/>
+                        <c:set var="max" value="10"/>
+                    </c:if>
+                    <c:set var="start" value="${start}"/>
+                    
+                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursDOWN&start=${start}&max=${max}">Precedent</a>
+                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursUP&start=${start}&max=${max}">Suivant</a>
                     <c:if test="${param['action'] == 'listerLesUtilisateurs'}" >  
                         <h2 class="position">Liste des utilisateurs</h2>  
 
@@ -133,5 +136,41 @@
                     </ul>  
                 </div>
             </div>    
-    </body>  
+    </body>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link href="lib/DataTables-1.9.4/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+        <script src="lib/DataTables-1.9.4/media/js/jquery.js"></script>
+        <script src="lib/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+    <script>
+    var currentPage = 1;
+    var lienNext;
+    var maxUsersParPage = 10;
+
+    function init() {
+        lienNext = document.querySelector("#lienNext");
+    }
+    function next() {
+        currentPage++;
+        console.log("servletUser?action=listerUtilisateurs&start=currentPage&max=" + maxUsersParPage);
+        lienNext.setAttribute("href", "servletUser?action=listerUtilisateurs&start=" +currentPage " + &max=" + maxUsersParPage);
+    }
+    /**.
+     * <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body onload="init();">
+
+  <A HREF="servletUser?action=listerUtilisateurs&start" onclick="next();" id="lienNext">NEXT</A> <A HREF="">PREVIOUS</A>
+  <p id="current"/p>
+</body>
+</html>
+     */
+    </script>
 </html> 

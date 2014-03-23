@@ -41,6 +41,10 @@ public class ServletUsers extends HttpServlet {
         String action = request.getParameter("action");
         String forwardTo = "";  
         String message = "";
+        int startRow = 0;
+        int maxRow = 0;
+        String startA;
+        String maxA;
 
         if (action != null) {  
             if (action.equals("listerLesUtilisateurs")) {
@@ -53,9 +57,9 @@ public class ServletUsers extends HttpServlet {
             {             
                 String start = request.getParameter("start");
                 String max = request.getParameter("max");
-                int startRow = Integer.valueOf(start) + 10;
-                int maxRow = Integer.valueOf(max);
-                System.out.println("START = " + start + "STARROW = " + startRow + "MAX =" + max + " MAXROW = " +maxRow);
+                startRow = Integer.valueOf(start) + 10;
+                maxRow = Integer.valueOf(max);
+                System.out.println("START = " + start + " STARROW = " + startRow + " MAX =" + max + " MAXROW = " +maxRow);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);                
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
@@ -65,8 +69,8 @@ public class ServletUsers extends HttpServlet {
             {
                 String start = request.getParameter("start");
                 String max = request.getParameter("max");
-                int startRow = Integer.valueOf(start) - 10;
-                int maxRow = Integer.valueOf(max);
+                startRow = Integer.valueOf(start) - 10;
+                maxRow = Integer.valueOf(max);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);                 
                 request.setAttribute("listeDesUsers", liste);     
                 
@@ -114,7 +118,10 @@ public class ServletUsers extends HttpServlet {
             }  
         }  
   
-        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message);  
+        startA = String.valueOf(startRow);
+        maxA = String.valueOf(maxRow);
+        
+        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message + maxA + startA);  
         dp.forward(request, response);  
         // Après un forward, plus rien ne peut être exécuté après !  
     } 

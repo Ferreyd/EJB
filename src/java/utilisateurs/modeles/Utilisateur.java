@@ -26,14 +26,16 @@ public class Utilisateur implements Serializable {
     private String firstname;  
     private String lastname;  
     private String login; 
+    private String pass;
 
     public Utilisateur() {
     }
 
-    public Utilisateur(final String firstname, final String lastname, final String login) {  
+    public Utilisateur(final String firstname, final String lastname, final String login, final String pass) {  
         this.login = login;  
         this.lastname = lastname;  
         this.firstname = firstname;  
+        this.pass = pass;
     }  
   
     
@@ -94,5 +96,16 @@ public class Utilisateur implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+    
+    
+    
     
 }

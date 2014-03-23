@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utilisateurs.gestionnaires.GestionnaireUtilisateurs;
 import utilisateurs.modeles.Utilisateur;
 
@@ -25,6 +26,12 @@ import utilisateurs.modeles.Utilisateur;
  */
 @WebServlet(name = "ServletUsers", urlPatterns = {"/ServletUsers"})
 public class ServletUsers extends HttpServlet {        
+
+    
+     int firstRow = 0;
+     int maxRow = 10; // nombre maximal d'utilisateur à afficher
+        
+
     @EJB
     private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
@@ -41,10 +48,17 @@ public class ServletUsers extends HttpServlet {
         String action = request.getParameter("action");
         String forwardTo = "";  
         String message = "";
+
+        Object connecte = null;
+  
+        //HttpSession session = request.getSession();
+        
+
         int startRow = 0;
         int maxRow = 0;
         String startA;
         String maxA;
+
 
         if (action != null) {  
             if (action.equals("listerLesUtilisateurs")) {
@@ -57,9 +71,13 @@ public class ServletUsers extends HttpServlet {
             {             
                 String start = request.getParameter("start");
                 String max = request.getParameter("max");
+
+                System.out.println("START = " + start + "STARROW = " + startRow + "MAX =" + max + " MAXROW = " +maxRow);
+
                 startRow = Integer.valueOf(start) + 10;
                 maxRow = Integer.valueOf(max);
                 System.out.println("START = " + start + " STARROW = " + startRow + " MAX =" + max + " MAXROW = " +maxRow);
+
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);                
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
@@ -69,8 +87,10 @@ public class ServletUsers extends HttpServlet {
             {
                 String start = request.getParameter("start");
                 String max = request.getParameter("max");
+
                 startRow = Integer.valueOf(start) - 10;
                 maxRow = Integer.valueOf(max);
+
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);                 
                 request.setAttribute("listeDesUsers", liste);     
                 
@@ -98,8 +118,11 @@ public class ServletUsers extends HttpServlet {
                 message = "Liste des utilisateurs";
             }            
            else if(action.equals("creerUnUtilisateur")){
-                gestionnaireUtilisateurs.creeUtilisateur(request.getParameter("prenom"), request.getParameter("nom"), request.getParameter("login"));
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+
+
+                gestionnaireUtilisateurs.creeUtilisateur(request.getParameter("prenom"), request.getParameter("nom"), request.getParameter("login"), "pass");
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);
+
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
@@ -112,16 +135,47 @@ public class ServletUsers extends HttpServlet {
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";
            }
+           
+           
+           else if(action.equals("checkConnexion"))
+           {
+               boolean existe = gestionnaireUtilisateurs.userExists(request.getParameter("log"), request.getParameter("pass"));
+              //System.out.println("EXISTE : " + existe);
+               //boolean existe = true;
+           
+               if(existe){
+                   /*session.setAttribute("login", request.getParameter("log"));
+                   session.setAttribute("mdp", request.getParameter("pass"));
+                   session.setAttribute("connecte", "OK");*/
+                   connecte = true;
+                   message = "Connexion reussie";
+                   
+                   
+                   forwardTo = "index.jsp?action=ok"; 
+               }
+               else {
+                  //session.setAttribute("connecte", "KO");
+                   message = "Connexion failed";
+                   forwardTo = "index.jsp?action=ko"; 
+               }
+           }
+           else if(action.equals("deconnexion")){   
+               //session.setAttribute("connecte", "KO");
+               //connecte = null;
+               message = "Deconnexion reussie";        
+               forwardTo = "index.jsp?action=bye"; 
+           }
+           
            else {  
                 forwardTo = "index.jsp?action=todo";  
                 message = "La fonctionnalité pour le paramètre " + action + " est à implémenter !\n";  
             }  
         }  
   
-        startA = String.valueOf(startRow);
-        maxA = String.valueOf(maxRow);
+     
         
-        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message + maxA + startA);  
+        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message);  
+
         dp.forward(request, response);  
         // Après un forward, plus rien ne peut être exécuté après !  
     } 

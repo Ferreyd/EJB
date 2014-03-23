@@ -17,14 +17,14 @@ public class GestionnaireUtilisateurs {
     private EntityManager em;  
   
     public void creerUtilisateursDeTest() {  
-        creeUtilisateur("John", "Lennon", "jlennon");  
-        creeUtilisateur("Paul", "Mac Cartney", "pmc");  
-        creeUtilisateur("Ringo", "Starr", "rstarr");  
-        creeUtilisateur("Georges", "Harisson", "georgesH");  
+        creeUtilisateur("John", "Lennon", "jlennon", "pass");  
+        creeUtilisateur("Paul", "Mac Cartney", "pmc", "pass");  
+        creeUtilisateur("Ringo", "Starr", "rstarr", "pass");  
+        creeUtilisateur("Georges", "Harisson", "georgesH", "pass");  
     }  
   
-    public Utilisateur creeUtilisateur(String prenom, String nom, String login) {  
-        Utilisateur u = new Utilisateur(prenom, nom, login);  
+    public Utilisateur creeUtilisateur(String prenom, String nom, String login, String pass) {  
+        Utilisateur u = new Utilisateur(prenom, nom, login, pass);  
         em.persist(u);  
         return u;  
     }  
@@ -61,6 +61,7 @@ public class GestionnaireUtilisateurs {
         
     }
     
+    
   
     public Collection<Utilisateur> getAllUsers(int firstRow, int maxRow) {  
         // Exécution d'une requête équivalente à un select *  
@@ -69,13 +70,26 @@ public class GestionnaireUtilisateurs {
         q.setMaxResults(maxRow);
         return q.getResultList();  
     }  
+   
+  public boolean userExists(String login, String pass){
+        Query q = em.createQuery("SELECT u FROM Utilisateur u");
+        Collection <Utilisateur> users = q.getResultList();
+        for (Utilisateur u : users){
+            if(u.getLogin().equals(login) ){
+                if(u.getPass().equals(pass)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public Collection<Utilisateur> getAllUsers() {  
         // Exécution d'une requête équivalente à un select *  
         Query q = em.createQuery("select u from Utilisateur u"); 
         return q.getResultList();  
     }
-    
+
    
     // Add business logic below. (Right-click in editor and choose  
     // "Insert Code > Add Business Method")

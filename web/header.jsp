@@ -1,14 +1,17 @@
-<c:if test="${!connecte}">  
-    <form action="ServletConnexion" method="get" id="formconnexion">     
-        Connexion : 
-        Login<input type="text" name="log"><br/>                 
-        Mot de passe<input type="text" name="pass"><br/>     
-        <input type="hidden" name="action" value="checkConnexion">     
-        <input type="submit" name="submit" value="Connexion">  
-    </form>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<c:if test="${connecte==null}">  
+    <form action="ServletUsers" method="get" >    
+            Connexion : 
+            Login<input type="text" name="log"><br/>                
+            Mot de passe<input type="text" name="pass"><br/>    
+            <input type="hidden" name="action" value="checkConnexion">    
+            <input type="submit" name="submit" value="Connexion"> 
+           ${connecte}
+           
+    </form>
 </c:if>
-<c:if test="${connecte}">  
-    <a href="ServletConnexion?action=deconnexion">Déconnexion</a>
+<c:if test="${connecte!=null}">
+    <a href="ServletUsers?action=deconnexion">Deconnexion</a>
 </c:if>
 
 <div>  

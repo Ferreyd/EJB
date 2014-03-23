@@ -13,22 +13,11 @@
 
 <html>  
     <head>  
-        <title>Gestionnaire d'utilisateurs</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
-        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap.css">
-        <link rel="stylesheet" href="resources/style.css">
-        <link rel="stylesheet" href="lib/DataTables-1.9.4/media/css/jquery.dataTables.css"/>
-        <script type="text/javascript" src="lib/jquery-1.11.0.js"></script>
-        <script type="text/javascript" src="lib/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="lib/jquery.tablesorter.pager.js"></script>
-
-        <meta charset=utf-8 />
+        <title>Gestionnaire d'utilisateurs</title>  
     </head>  
-    <body>            
-    </div>
-    <div class="col-lg-11">  
+    <body> 
+     
+        <div class="col-lg-12">  
 
         <!-- Message qui s'affiche lorsque la page est appelé avec un paramètre http message -->  
         <c:if test="${!empty param['message']}">  
@@ -59,7 +48,6 @@
                             <input type="submit" value="Créer l'utilisateur" class="btn btn-primary" name="submit"/>
                         </div>
                     </form>  
-
 
                     <h4>Afficher les détails d'un utilisateur</h4>  
                     <form action="ServletUsers" method="get"> 
@@ -99,8 +87,18 @@
 
                 </div>
 
-            </div>
-            <!-- Fin du menu -->  
+                <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
+                <div class="col-lg-6">
+                    <c:if test="${start == null}">
+                        <c:set var="start" value="0"/>
+                        <c:set var="max" value="10"/>
+                    </c:if>
+                    <c:set var="start" value="${start}"/>
+                    
+                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursDOWN&start=${start}&max=${max}">Precedent</a>
+                    <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursUP&start=${start}&max=${max}">Suivant</a>
+                    <c:if test="${param['action'] == 'listerLesUtilisateurs'}" >  
+                        <h2 class="position">Liste des utilisateurs</h2>  
 
             <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
             <div class="col-lg-6">
@@ -152,17 +150,48 @@
             </div>
 
 
-        </div> 
+                    </c:if> 
+                    <ul>
+                        <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
+                        <p>  
+                    </ul>  
+                </div>
+            </div>    
+    </body>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link href="lib/DataTables-1.9.4/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+        <script src="lib/DataTables-1.9.4/media/js/jquery.js"></script>
+        <script src="lib/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
+    <script>
+    var currentPage = 1;
+    var lienNext;
+    var maxUsersParPage = 10;
 
+    function init() {
+        lienNext = document.querySelector("#lienNext");
+    }
+    function next() {
+        currentPage++;
+        console.log("servletUser?action=listerUtilisateurs&start=currentPage&max=" + maxUsersParPage);
+        lienNext.setAttribute("href", "servletUser?action=listerUtilisateurs&start=" +currentPage " + &max=" + maxUsersParPage);
+    }
+    /**.
+     * <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body onload="init();">
 
-    </div>
+  <A HREF="servletUser?action=listerUtilisateurs&start" onclick="next();" id="lienNext">NEXT</A> <A HREF="">PREVIOUS</A>
+  <p id="current"/p>
 </body>
-<script>
-    $(document).ready(function() {
-        $('#table').dataTable();
-    });
-</script>
+</html>
+     */
+    </script>
 </html> 
-
-
-

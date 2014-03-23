@@ -65,9 +65,9 @@ public class GestionnaireUtilisateurs {
   
     public Collection<Utilisateur> getAllUsers(int firstRow, int maxRow) {  
         // Exécution d'une requête équivalente à un select *  
-        Query q = em.createQuery("select u from Utilisateur u"); 
+        Query q = em.createQuery("select u from Utilisateur u");
+        q.setMaxResults(10);
         q.setFirstResult(firstRow);
-        q.setMaxResults(maxRow);
         return q.getResultList();  
     }  
    
@@ -89,7 +89,6 @@ public class GestionnaireUtilisateurs {
         Query q = em.createQuery("select u from Utilisateur u"); 
         return q.getResultList();  
     }
-
    
     // Add business logic below. (Right-click in editor and choose  
     // "Insert Code > Add Business Method")

@@ -56,50 +56,58 @@ public class ServletUsers extends HttpServlet {
 
         int startRow = 0;
         int maxRow = 0;
-        String startA;
-        String maxA;
-
-
+        int totalRow;
+        
         if (action != null) {  
             if (action.equals("listerLesUtilisateurs")) {
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(0, 10);                
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(0, 10);
+                totalRow = gestionnaireUtilisateurs.getAllUsers().size();
+                request.setAttribute("totalRow", totalRow);
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";  
             }
             else if(action.equals("listerLesUtilisateursUP"))
             {             
-                String start = request.getParameter("start");
-                String max = request.getParameter("max");
-
-                System.out.println("START = " + start + "STARROW = " + startRow + "MAX =" + max + " MAXROW = " +maxRow);
-
-                startRow = Integer.valueOf(start) + 10;
-                maxRow = Integer.valueOf(max);
-                System.out.println("START = " + start + " STARROW = " + startRow + " MAX =" + max + " MAXROW = " +maxRow);
-
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);                
+                startRow = Integer.valueOf(request.getParameter("start"));
+                maxRow = Integer.valueOf(request.getParameter("max"));
+                
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);
+                totalRow = gestionnaireUtilisateurs.getAllUsers().size();
+                request.setAttribute("totalRow", totalRow);
+                
+                startRow += 10;
+                request.setAttribute("start", startRow);
+                
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
-                message = "Liste des utilisateurs"; 
+                message = "Liste des utilisateurs";              
+                
             }
             else if(action.equals("listerLesUtilisateursDOWN"))
             {
-                String start = request.getParameter("start");
-                String max = request.getParameter("max");
-
-                startRow = Integer.valueOf(start) - 10;
-                maxRow = Integer.valueOf(max);
-
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);                 
-                request.setAttribute("listeDesUsers", liste);     
-                
+                startRow = Integer.valueOf(request.getParameter("start"));
+                maxRow = Integer.valueOf(request.getParameter("max"));
+                if(startRow <= 0)
+                {
+                    startRow = 0;
+                }
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow); 
+                totalRow = gestionnaireUtilisateurs.getAllUsers().size();
+                request.setAttribute("totalRow", totalRow);
+                request.setAttribute("listeDesUsers", liste);        
+                startRow -= 10;
+                if(startRow <= 0)
+                {
+                    startRow = 0;
+                }
+                request.setAttribute("start", startRow);               
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs"; 
             }
             else if (action.equals("creerUtilisateursDeTest")) {  
                   gestionnaireUtilisateurs.creerUtilisateursDeTest();
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();  
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(0,10);  
                 request.setAttribute("listeDesUsers", liste);  
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";  
                 message = "Liste des utilisateurs";  
@@ -174,7 +182,7 @@ public class ServletUsers extends HttpServlet {
   
      
         
-        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message);  
+        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message + " START = " + startRow);  
 
         dp.forward(request, response);  
         // Après un forward, plus rien ne peut être exécuté après !  

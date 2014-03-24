@@ -49,9 +49,9 @@ public class ServletUsers extends HttpServlet {
         String forwardTo = "";  
         String message = "";
 
-        Object connecte = null;
+        //Object connecte = null;
   
-        //HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         
 
         int startRow = 0;
@@ -152,23 +152,23 @@ public class ServletUsers extends HttpServlet {
                //boolean existe = true;
            
                if(existe){
-                   /*session.setAttribute("login", request.getParameter("log"));
+                   session.setAttribute("login", request.getParameter("log"));
                    session.setAttribute("mdp", request.getParameter("pass"));
-                   session.setAttribute("connecte", "OK");*/
-                   connecte = true;
+                   session.setAttribute("connecte", "OK");
+                   //connecte = true;
                    message = "Connexion reussie";
                    
                    
                    forwardTo = "index.jsp?action=ok"; 
                }
                else {
-                  //session.setAttribute("connecte", "KO");
+                  session.setAttribute("connecte", "KO");
                    message = "Connexion failed";
                    forwardTo = "index.jsp?action=ko"; 
                }
            }
            else if(action.equals("deconnexion")){   
-               //session.setAttribute("connecte", "KO");
+               session.setAttribute("connecte", "KO");
                //connecte = null;
                message = "Deconnexion reussie";        
                forwardTo = "index.jsp?action=bye"; 

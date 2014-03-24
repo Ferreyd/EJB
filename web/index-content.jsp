@@ -19,11 +19,6 @@
         <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap.css">
         <link rel="stylesheet" href="resources/style.css">
-        <link rel="stylesheet" href="lib/DataTables-1.9.4/media/css/jquery.dataTables.css"/>
-        <script type="text/javascript" src="lib/jquery-1.11.0.js"></script>
-        <script type="text/javascript" src="lib/DataTables-1.9.4/media/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" src="lib/jquery.tablesorter.pager.js"></script>
-
         <meta charset=utf-8 />
     </head>  
     <body> 

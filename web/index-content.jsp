@@ -14,35 +14,37 @@
 <html>  
     <head>  
         <title>Gestionnaire d'utilisateurs</title>  
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.css">
-        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap.css">
-        <link rel="stylesheet" href="resources/style.css">
-        <meta charset=utf-8 />
     </head>  
     <body> 
     </div>
-    <div class="col-lg-11">  
+    <div class="col-xs-12">
+        <!-- Message qui s'affiche lorsque la page est appelé avec un paramètre http message -->  
+        <c:if test="${!empty param['message']}">  
+            <h4>Reçu message : ${param.message}</h4>  
+        </c:if>  
 
-        <div class="col-lg-12">  
+        <h4>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
+            rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h4> 
 
-            <!-- Message qui s'affiche lorsque la page est appelé avec un paramètre http message -->  
-            <c:if test="${!empty param['message']}">  
-                <h4>Reçu message : ${param.message}</h4>  
-            </c:if>  
+        <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></h4>  
+        <div class="col-xs-1">
+            <div id="menu">
+                <h2>Menu</h2>
+                <a class="btn btn-primary" href="ServletUsers?action=${action}&form=AfficheCreerUtilisateur">Creer un utilisateur</a>
+                <a class="btn btn-primary" href="ServletUsers?action=${action}&form=AfficheDetailUtilisateur">Afficher un utilisateur</a>
+                <a class="btn btn-primary" href="ServletUsers?action=${action}&form=AfficheModifieUtilisateur">Modifier un utilisateur</a>
+                <a class="btn btn-primary" href="ServletUsers?action=${action}&form=AfficheSupprimerUtilisateur">Supprimer un utilisateur</a>
 
-            <h4>Liste des fonctionnalités à implémenter dans la Servlet (note : après chaque action cette page sera  
-                rappelée par la servlet avec la liste des utilisateurs raffraichie et un message de confirmation</h4> 
-
-            <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=creerUtilisateursDeTest" role="button">Créer 4 utilisateurs de test</a></h4>  
-
-            <div class="col-lg-12">
-
-                <div class="col-lg-6">
+            </div>
+        </div>
+        <div class="col-xs-11">
+            <div class="col-xs-12">
+                <div class="col-xs-6">
                     <h2 class="position">Formulaire</h2>
-                    <div class="col-lg-6">                       
-                        <h4>Créer un utilisateur</h4> 
+
+                    <c:if test="${param['form'] == 'AfficheCreerUtilisateur'}" >
+                        <h4>Créer un utilisateur</h4>
+
                         <form action="ServletUsers" method="get"> 
                             <div class="form-group">
                                 <label for="nom">Nom</label>
@@ -55,9 +57,10 @@
                                 <input type="hidden" name="action" value="creerUnUtilisateur"/>  
                                 <input type="submit" value="Créer l'utilisateur" class="btn btn-primary" name="submit"/>
                             </div>
-                        </form>  
+                        </form> 
+                    </c:if>
 
-
+                    <c:if test="${param['form'] == 'AfficheDetailUtilisateur'}" >    
                         <h4>Afficher les détails d'un utilisateur</h4>  
                         <form action="ServletUsers" method="get"> 
                             <div class="form-group">
@@ -67,8 +70,11 @@
                                 <input type="submit" value="Chercher" class="btn btn-info" name="submit"/> 
                             </div>
                         </form> 
-                    </div>
-                    <div class="col-lg-6">
+
+
+                    </c:if>
+                    <c:if test="${param['form'] == 'AfficheModifieUtilisateur'}" >   
+
 
                         <h4>Modifier les détails d'un utilisateur :</h4>  
                         <form action="ServletUsers" method="get">
@@ -83,7 +89,8 @@
                                 <input type="submit" value="Mettre à jour" class="btn btn-warning" name="submit"/>  
                             </div>
                         </form> 
-
+                    </c:if>
+                    <c:if test="${param['form'] == 'AfficheSupprimerUtilisateur'}" >   
                         <h4>Supprimer un utilisateur :</h4>  
                         <form action="ServletUsers" method="get"> 
                             <div class="form-group">
@@ -94,17 +101,18 @@
                             </div>
                         </form>
 
-                    </div>
+
+                    </c:if>
 
                 </div>
                 <!-- Fin du menu -->  
 
+                <div class="col-xs-6">
+                    <c:if test="${param['action'] == 'listerLesUtilisateurs'}" >  
+                        <h2 class="position">Liste des utilisateurs</h2>  
 
-                <c:if test="${param['action'] == 'listerLesUtilisateurs'}" >  
-                    <h2 class="position">Liste des utilisateurs</h2>  
+                        <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
 
-                    <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes --> 
-                    <div class="col-lg-6">
                         <c:if test="${start == null}">
                             <c:set var="start" value="0"/>
 
@@ -142,24 +150,20 @@
                                 <!-- Affichage du solde total dans la dernière ligne du tableau -->  
                                 <tr><td><b>TOTAL</b></td><td></td><td><b>${total}/${totalRow}</b></td><td></td></tr>  
                             </table>  
-
                         </c:if> 
                         <ul>
                             <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
                             <p>  
                         </ul>  
-                    </div>
-
-
-                </c:if> 
+                    </c:if> 
+                </div>
                 <ul>
                     <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
                     <p>  
                 </ul>  
-            </div>
-
-
-        </div>    
+            </div>    
+        </div>
+    </div>   
 </body>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 <link rel="stylesheet" href="lib/bootstrap-3.1.1-dist/css/bootstrap-theme.css">

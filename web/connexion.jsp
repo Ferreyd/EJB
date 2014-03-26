@@ -14,15 +14,20 @@
     <body>
 
 
-        <form action="ServletUsers" method="get" >    
-            Connexion : 
-            Login<input type="text" name="log"><br/>                
-            Mot de passe<input type="text" name="pass"><br/>    
-            <input type="hidden" name="action" value="checkConnexion">    
-            <input type="submit" name="submit" value="Connexion"> 
-            ${connecte}
-
+        <form role="form" action="ServletUsers" method="get" >
+            <div class="form-group col-xs-12">
+                <h2>Veuillez entrez vos identifiants de connexions ci dessous :</h2>
+                <div class="col-xs-3 text-center">
+                     <label for="log">Login</label>
+                    <input class="form-control"placeholder="Login" type="text" name="log">
+                    <label for="pass">Mot de passe</label>
+                    <input class="form-control"placeholder="Mot de passe" type="text" name="pass"><br/>    
+                    <input type="hidden" name="action" value="checkConnexion">    
+                    <input type="submit" name="submit" value="Connexion">
+                </div>
+            </div>
         </form>
+
 
 
     </body>

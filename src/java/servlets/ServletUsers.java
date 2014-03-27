@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utilisateurs.gestionnaires.GestionnaireUtilisateurs;
+import utilisateurs.modeles.Adresse;
 import utilisateurs.modeles.Utilisateur;
 
 /**
@@ -66,6 +67,18 @@ public class ServletUsers extends HttpServlet {
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
+            }
+             else if (action.equals("listerUtilisateursParVille")) {  
+                // on récupère le paramètre idVille  
+                int idVille = Integer.parseInt(request.getParameter("idVille"));  
+  
+                // On récupère la liste des utilisateurs pour la ville  
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getUsersParVille(idVille);  
+  
+                // et on passe le résultat à la JSP pour affichage...  
+                request.setAttribute("listeDesUsers", liste);  
+                forwardTo = "index.jsp?action=listerLesUtilisateurs";  
+                message = "Liste des utilisateurs pour la ville No : " + idVille;  
             } else if (action.equals("listerLesUtilisateursUP")) {
                 startRow = Integer.valueOf(request.getParameter("start"));
                 maxRow = Integer.valueOf(request.getParameter("max"));
@@ -74,9 +87,11 @@ public class ServletUsers extends HttpServlet {
                 totalRow = gestionnaireUtilisateurs.getAllUsers().size();
                 request.setAttribute("totalRow", totalRow);
 
-                startRow += 10;
-                request.setAttribute("start", startRow);
+                if (startRow < maxRow) {
+                    startRow += 10;
+                }
 
+                request.setAttribute("start", startRow);
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs&form=" + form;
                 message = "Liste des utilisateurs";
@@ -84,9 +99,11 @@ public class ServletUsers extends HttpServlet {
             } else if (action.equals("listerLesUtilisateursDOWN")) {
                 startRow = Integer.valueOf(request.getParameter("start"));
                 maxRow = Integer.valueOf(request.getParameter("max"));
+                
                 if (startRow <= 0) {
                     startRow = 0;
                 }
+                
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(startRow, maxRow);
                 totalRow = gestionnaireUtilisateurs.getAllUsers().size();
                 request.setAttribute("totalRow", totalRow);
@@ -117,7 +134,8 @@ public class ServletUsers extends HttpServlet {
                 message = "Liste des utilisateurs";
             } else if (action.equals("creerUnUtilisateur")) {
 
-                gestionnaireUtilisateurs.creeUtilisateur(request.getParameter("prenom"), request.getParameter("nom"), request.getParameter("login"), "pass");
+                Adresse adresse = (Adresse)request.getAttribute("adresse");
+                gestionnaireUtilisateurs.creeUtilisateur(request.getParameter("prenom"), request.getParameter("nom"), request.getParameter("login"), "pass", adresse);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers(firstRow, 10);
 
                 request.setAttribute("listeDesUsers", liste);
@@ -189,7 +207,7 @@ public class ServletUsers extends HttpServlet {
             }
         }
 
-        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message + " START = " + startRow);
+        RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message);
 
         dp.forward(request, response);
         // Après un forward, plus rien ne peut être exécuté après !  

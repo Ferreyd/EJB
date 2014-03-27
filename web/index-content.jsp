@@ -118,8 +118,10 @@
 
                         </c:if>
                         <c:set var="max" value="10"/>
-                        <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursDOWN&start=${start}&max=${max}">Precedent</a>
-                        <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursUP&start=${start}&max=${max}">Suivant</a>
+                        <center>
+                            <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursDOWN&start=${start}&max=${max}">Precedent</a>
+                            <a class="btn btn-primary" href="ServletUsers?action=listerLesUtilisateursUP&start=${start}&max=${max}">Suivant</a>
+                        </center>
                         <c:if test="${param['action'] == 'listerLesUtilisateurs'}" > 
 
 
@@ -131,19 +133,28 @@
                                     <td><b>Login</b></td>  
                                     <td><b>Nom</b></td>  
                                     <td><b>Prénom</b></td>  
+                                    <td><b>Ville</b></td>  
+                                    <td><b>Code postal</b></td>   
                                 </tr>  
 
                                 <!-- Ici on affiche les lignes, une par utilisateur -->  
                                 <!-- cette variable montre comment on peut utiliser JSTL et EL pour calculer -->  
-                                <c:set var="total" value="0"/>  
+                                <c:set var="total" value="${start}"/>  
 
                                 <c:forEach var="u" items="${requestScope['listeDesUsers']}">  
                                     <tr>  
                                         <td>${u.login}</td>  
-                                        <td>${u.lastname}</td>  
                                         <td>${u.firstname}</td>  
-                                        <!-- On compte le nombre de users -->  
-                                        <c:set var="total" value="${total+1+start}"/>  
+                                        <td>${u.lastname}</td>  
+                                        <td>
+                                            <a href="ServletUsers?action=listerUtilisateursParVille&idville=${u.adresse.id}">
+                                                ${u.adresse.ville}
+                                            </a>
+                                        </td>
+                                        <td>${u.adresse.codePostal}</td>  
+
+                                        <!-- On compte le nombre de users -->   
+                                        <c:set var="total" value="${total+1}"/>  
                                     </tr>  
                                 </c:forEach>  
 
@@ -151,16 +162,12 @@
                                 <tr><td><b>TOTAL</b></td><td></td><td><b>${total}/${totalRow}</b></td><td></td></tr>  
                             </table>  
                         </c:if> 
-                        <ul>
-                            <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
-                            <p>  
-                        </ul>  
-                    </c:if> 
+                    </c:if>
+                    <ul>
+                        <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
+                        <p>  
+                    </ul> 
                 </div>
-                <ul>
-                    <h4 class="position"><a class="btn btn-default" href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></h4>
-                    <p>  
-                </ul>  
             </div>    
         </div>
     </div>   

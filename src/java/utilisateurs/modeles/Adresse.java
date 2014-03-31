@@ -34,6 +34,7 @@ public class Adresse implements Serializable {
     private String ville;
     @Pattern(regexp = "[0-9]{5}") // On accepte les codes postaux du type "06410"  
     private String codePostal;
+    private String numRue;
 
     @OneToMany(mappedBy = "adresse")
     private List<Utilisateur> utilisateurs = new ArrayList<>();

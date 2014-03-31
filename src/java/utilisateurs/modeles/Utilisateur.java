@@ -7,10 +7,14 @@
 package utilisateurs.modeles;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -30,6 +34,14 @@ public class Utilisateur implements Serializable {
     private String pass;
     @OneToOne
     private Adresse adresse;
+    
+    @ManyToMany
+    @JoinTable(name = "UTILISATEUR_TELEPHONE",
+            joinColumns = {
+                @JoinColumn(name = "TELEPHONE_PK", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "Utilisateur_PK", referencedColumnName = "id")})
+    private Set<Telephone> telBelongsTo;
 
     public Utilisateur() {
     }

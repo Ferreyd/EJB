@@ -8,7 +8,9 @@ package utilisateurs.modeles;
 
 import java.io.Serializable;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,13 +37,14 @@ public class Utilisateur implements Serializable {
     @OneToOne
     private Adresse adresse;
     
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "UTILISATEUR_TELEPHONE",
             joinColumns = {
                 @JoinColumn(name = "TELEPHONE_PK", referencedColumnName = "id")},
             inverseJoinColumns = {
-                @JoinColumn(name = "Utilisateur_PK", referencedColumnName = "id")})
-    private Set<Telephone> telBelongsTo;
+                @JoinColumn(name = "UTILISATEUR_PK", referencedColumnName = "id")})
+    private Set<Telephone> telephones;
+
 
     public Utilisateur() {
     }
@@ -132,6 +135,20 @@ public class Utilisateur implements Serializable {
     public void setPass(String pass) {
         this.pass = pass;
     }
+
+    public Set<Telephone> getTelephones() {
+        return telephones;
+    }
+    
+
+    public void setTelephones(Set<Telephone> telephones) {
+        this.telephones = telephones;
+    }
+    
+    
+    
+    
+
     
     
     

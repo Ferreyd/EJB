@@ -2,12 +2,15 @@ package utilisateurs.gestionnaires;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import utilisateurs.modeles.Adresse;
+import utilisateurs.modeles.Telephone;
 import utilisateurs.modeles.Utilisateur;
 
 /**
@@ -38,23 +41,41 @@ public class GestionnaireUtilisateurs {
         em.persist(valbonne);
         Adresse nice = new Adresse("Nice", "06000");
         em.persist(nice);
-
+        
+        Telephone tel1 = new Telephone("0102030405");
+        em.persist(tel1);
+        Telephone tel2 = new Telephone("0607080910");
+        em.persist(tel2);
+        Telephone tel3 = new Telephone("1112131415");
+        em.persist(tel3);
+        
+        Set<Telephone> t1 = new HashSet<Telephone>();
+        Set<Telephone> t2 = new HashSet<Telephone>();
+        Set<Telephone> t3 = new HashSet<Telephone>();
+        
+        t1.add(tel1); t1.add(tel2);
+        t2.add(tel1); t2.add(tel3);
+        t3.add(tel2); t3.add(tel3);
+        
+        
         // Note : après un persist, les objets sont connectés  
         // John et Paul habitent à Biot  
-        Utilisateur john = creeUtilisateur("John", "Lennon", "jlennon", "pass", biot);
-        Utilisateur paul = creeUtilisateur("Paul", "Mac Cartney", "pmc", "pass", biot);
-        Utilisateur ringo = creeUtilisateur("Ringo", "Starr", "rstarr", "pass", nice);
-        Utilisateur georges = creeUtilisateur("Georges", "Harisson", "georgesH", "pass", valbonne);
+        Utilisateur john = creeUtilisateur("John", "Lennon", "jlennon", "pass", biot, t1);
+        Utilisateur paul = creeUtilisateur("Paul", "Mac Cartney", "pmc", "pass", biot, t2);
+        Utilisateur ringo = creeUtilisateur("Ringo", "Starr", "rstarr", "pass", nice, t1);
+        Utilisateur georges = creeUtilisateur("Georges", "Harisson", "georgesH", "pass", valbonne, t3);
     }
 
-    public Utilisateur creeUtilisateur(String prenom, String nom, String login, String pass, Adresse a) {
+    public Utilisateur creeUtilisateur(String prenom, String nom, String login, String pass, Adresse a, Set<Telephone> t) {
         Utilisateur u = new Utilisateur(nom, prenom, login);
         // On met à jour la relation, elle est déjà en base  
         u.setAdresse(a);
+        u.setTelephones(t);
 
         // a est déjà en base et connectée, donc la ligne suivante modifie les   
         // données pour relier l'adresse à l'utilisateur  
         a.addUtilisateur(u);
+        
 
         // On persiste l'utilisateur, la relation est déjà en base, cela va donc  
         // ajouter une ligne dans la table des utilisateur avec une clé étrangère  
